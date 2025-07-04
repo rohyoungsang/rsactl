@@ -1,0 +1,648 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="no-referrer">
+    <title>다중 에이전트 강화학습 연구 분석 및 제안서 검토</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .paper-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .paper-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f3f4f6;
+        }
+        
+        .highlight {
+            background-color: rgba(79, 70, 229, 0.1);
+            border-left: 4px solid #4f46e5;
+            padding: 16px;
+            margin: 16px 0;
+        }
+        
+        .recommendation {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid #10b981;
+            padding: 16px;
+            margin: 16px 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <header class="bg-indigo-700 text-white py-10">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-4">다중 에이전트 강화학습 연구 분석 및 제안서 검토</h1>
+            <p class="text-xl">역할-상태 인식 기반의 이기종 에이전트 협력 구조 학습 연구 제안서 독창성 및 차별성 평가</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">1. 분석 대상 논문 요약</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- FMH -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="bg-indigo-600 text-white px-5 py-3">
+                        <h3 class="font-bold">FMH (Feudal Multi-Agent Hierarchies)</h3>
+                        <p class="text-sm text-indigo-100">2019년 발표</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-semibold">주요 특징</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>계층적 구조를 통한 다중 에이전트 강화학습</li>
+                            <li>매니저 에이전트와 워커 에이전트의 명확한 역할 구분</li>
+                            <li>매니저는 서브골 설정 및 보상 함수 전달 담당</li>
+                            <li>워커는 동시에 서브골 달성을 위해 작동</li>
+                            <li>공유 관찰 없이도 협력 가능</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">강점</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>비정상성(non-stationarity) 문제 완화</li>
+                            <li>예측 가능한 워커 행동 유도</li>
+                            <li>확장성 우수 (복잡한 환경에서 성능 유지)</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">한계</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>매니저-워커 사이 고정된 계층 구조</li>
+                            <li>역할이 사전에 정의됨 (동적 역할 변화 없음)</li>
+                            <li>구조적 연결 방식에 역할이 반영되지 않음</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ROMA -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="bg-purple-600 text-white px-5 py-3">
+                        <h3 class="font-bold">ROMA (Role-Oriented Multi-Agent RL)</h3>
+                        <p class="text-sm text-purple-100">2020년 발표</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-semibold">주요 특징</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>역할 기반의 다중 에이전트 강화학습 프레임워크</li>
+                            <li>사전 정의된 역할 대신 동적으로 역할이 출현(emergent)</li>
+                            <li>확률적 역할 임베딩 사용 (가우시안 분포)</li>
+                            <li>역할 특성: 동적(Dynamic), 식별 가능(Identifiable), 특화된(Specialized)</li>
+                            <li>개별 정책을 역할에 따라 조건화</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">강점</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>학습 효율성 향상</li>
+                            <li>역할 분화를 통한 효과적인 협력</li>
+                            <li>유사한 책임을 가진 에이전트 간 정책 공유</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">한계</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>역할이 구조적으로 연결 방식에 반영되지 않음</li>
+                            <li>상태 정보를 명시적으로 임베딩에 반영하지 않음</li>
+                            <li>구조 자체는 여전히 고정적</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- GACG -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="bg-blue-600 text-white px-5 py-3">
+                        <h3 class="font-bold">GACG (Group-Aware Coordination Graph)</h3>
+                        <p class="text-sm text-blue-100">2024년 발표</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-semibold">주요 특징</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>그룹 수준의 의존성과 에이전트 쌍 간의 협력 통합</li>
+                            <li>현재 관찰 기반 협력 필요성 계산</li>
+                            <li>과거 행동 패턴에서 그룹 동작 추출</li>
+                            <li>그래프의 모든 에지를 가우시안 분포로 표현</li>
+                            <li>그룹 거리 손실 함수를 통한 행동 일관성 보장</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">강점</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>관계 수준의 불확실성 모델링 가능</li>
+                            <li>그룹 내 행동 일관성, 그룹 간 특화 촉진</li>
+                            <li>다양한 관계 수준의 포괄적 표현</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">한계</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>역할과 상태 정보 명시적 반영 부족</li>
+                            <li>주로 동질 에이전트 환경에 초점</li>
+                            <li>관찰 윈도우 길이에 성능이 의존적</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- HYGMA -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="bg-teal-600 text-white px-5 py-3">
+                        <h3 class="font-bold">HYGMA (Hypergraph Coordination Networks)</h3>
+                        <p class="text-sm text-teal-100">2025년 발표</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-semibold">주요 특징</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>하이퍼그래프 기반 정보 처리와 동적 그룹화</li>
+                            <li>동적 스펙트럴 클러스터링을 통한 에이전트 그룹화</li>
+                            <li>하이퍼그래프 신경망을 통한 고차원 상호작용 포착</li>
+                            <li>그룹 형성과 정보 처리를 분리하는 2단계 구조</li>
+                            <li>정보 처리 효율 향상을 위한 아키텍처</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">강점</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>샘플 효율성 및 성능 향상</li>
+                            <li>동적 그룹화 메커니즘의 높은 품질</li>
+                            <li>매개변수 효율성 유지</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">한계</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>HGCN 모듈로 인한 연산 오버헤드(약 36%)</li>
+                            <li>역할 기반 접근법이 아닌 일반 그룹화에 초점</li>
+                            <li>명시적 역할 정보 활용 부재</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- QMIX-GNN -->
+                <div class="paper-card bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="bg-red-600 text-white px-5 py-3">
+                        <h3 class="font-bold">QMIX-GNN (GNN-Based Heterogeneous MARL)</h3>
+                        <p class="text-sm text-red-100">2025년 발표</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-semibold">주요 특징</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>이기종 에이전트를 위한 GNN 기반 접근법</li>
+                            <li>적응적 정보 융합 메커니즘</li>
+                            <li>다양한 관찰 및 행동 공간 처리를 위한 전용 모듈</li>
+                            <li>에이전트 네트워크, 정보 융합 네트워크, 믹싱 네트워크 구성</li>
+                            <li>타입별 투영 행렬을 통한 이기종 정보 처리</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">강점</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>이기종 에이전트 간 원활한 협력 지원</li>
+                            <li>복잡한 작업에서 성능 및 수렴 속도 향상</li>
+                            <li>공유 파라미터와 타워 구조를 통한 차별화된 정책 학습</li>
+                        </ul>
+                        <h4 class="font-semibold mt-4">한계</h4>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li>단순한 작업에서는 이점이 제한적</li>
+                            <li>토폴로지는 고정된 구조로 학습 대상이 아님</li>
+                            <li>에이전트 간 관계를 정보 융합에만 활용, 구조 자체는 학습하지 않음</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">2. 제안된 연구: 역할-상태 인식 기반의 이기종 에이전트 협력 구조 학습</h2>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h3 class="text-xl font-bold mb-4 text-indigo-600">연구 핵심 개념</h3>
+                <p class="mb-4">이기종 다중 에이전트 시스템(HMAS)에서 각 에이전트의 역할과 상태를 기반으로 유연한 협력 구조를 동적으로 학습하고, 이를 통해 효율적이고 일반화 가능한 정책을 공동 학습하는 프레임워크를 제안합니다.</p>
+
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-indigo-700 mb-2">구조적 목표</h4>
+                        <ol class="list-decimal ml-5">
+                            <li>에이전트의 역할(Role), 현재 상태(State), 관찰 정보(Observation)를 결합한 임베딩 학습</li>
+                            <li>임베딩 관계를 기반으로 에이전트 간 협력 관계 예측</li>
+                            <li>협력 관계를 통한 soft/sparse 협력 구조 동적 구성</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-indigo-700 mb-2">학습 및 적용 목표</h4>
+                        <ol class="list-decimal ml-5">
+                            <li>협력 구조 하에서 보상 공유와 정책 학습 구조 동시 최적화</li>
+                            <li>기존 MARL 알고리즘과 통합하여 성능 향상 기여도 검증</li>
+                            <li>역할/에이전트 수/임무 변화에 대한 적응성 및 일반화 성능 입증</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-600">프레임워크 아키텍처</h3>
+                
+                <div class="grid lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-indigo-700 mb-2">1. 역할-상태 임베딩 학습</h4>
+                        <div class="bg-gray-100 p-4 rounded-lg mb-4">
+                            <code>e<sub>i</sub> = f<sub>θ</sub>(o<sub>i</sub>, r<sub>i</sub>, s<sub>i</sub>, t<sub>i</sub>)</code>
+                        </div>
+                        <p>여기서:</p>
+                        <ul class="list-disc ml-5 mt-2">
+                            <li><code>o<sub>i</sub></code>: 국소 관찰 정보</li>
+                            <li><code>r<sub>i</sub></code>: 수행 가능한 역할 (운반, 집기 등)</li>
+                            <li><code>s<sub>i</sub></code>: 현재 자원 상태, 위치 등 환경 내 상황</li>
+                            <li><code>t<sub>i</sub></code>: 현재 환경 내 위치, 자원, 활동 상황</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-indigo-700 mb-2">2. 연결 구조 학습</h4>
+                        <div class="mb-4">
+                            <p class="font-medium mb-2">Soft attention 기반 연결 확률:</p>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <code>α<sub>ij</sub> = exp(g(e<sub>i</sub>,e<sub>j</sub>)) / Σ<sub>k</sub> exp(g(e<sub>i</sub>,e<sub>k</sub>))</code>
+                            </div>
+                            <p class="mt-2 text-sm">GAT(Graph Attention Network) 기반의 연속적 구조</p>
+                        </div>
+                        <div>
+                            <p class="font-medium mb-2">Gumbel-Softmax 기반 이산 구조:</p>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <code>c<sub>ij</sub> = σ((log p<sub>ij</sub> + g<sub>j</sub>)/τ)</code>
+                            </div>
+                            <p class="mt-2 text-sm">이진 연결을 샘플링하는 sparse하고 해석 가능한 구조</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6">
+                    <h4 class="font-semibold text-indigo-700 mb-2">3. 협력 정책 학습</h4>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <p class="font-medium mb-2">보상 공유:</p>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <code>r̃<sub>i</sub> = Σ<sub>j∈N(i)</sub> A<sub>ji</sub> · r<sub>j</sub></code>
+                            </div>
+                            <p class="mt-2 text-sm">연결된 에이전트로부터 가중치 기반 보상 공유</p>
+                        </div>
+                        <div>
+                            <p class="font-medium mb-2">정책 학습 및 손실 함수:</p>
+                            <div class="bg-gray-100 p-4 rounded-lg">
+                                <code>π<sub>i</sub>(a<sub>i</sub> | o<sub>i</sub>, r̃<sub>i</sub>)</code><br>
+                                <code>L<sub>total</sub> = L<sub>RL</sub> + λ<sub>1</sub>L<sub>entropy</sub> + λ<sub>2</sub>L<sub>structure</sub></code>
+                            </div>
+                            <p class="mt-2 text-sm">구조와 정책의 공동 최적화</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">3. 기존 연구와의 차별성 분석</h2>
+
+            <div class="overflow-x-auto mb-8">
+                <table class="min-w-full">
+                    <thead>
+                        <tr>
+                            <th>비교 항목</th>
+                            <th>FMH</th>
+                            <th>ROMA</th>
+                            <th>GACG</th>
+                            <th>HYGMA</th>
+                            <th>QMIX-GNN</th>
+                            <th>제안 연구</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>역할 인식</td>
+                            <td>계층적 역할<br>(매니저/워커)</td>
+                            <td>암묵적 역할 분화</td>
+                            <td>없음</td>
+                            <td>없음</td>
+                            <td>타입에 따른 처리</td>
+                            <td class="font-medium text-indigo-700">명시적 역할 임베딩</td>
+                        </tr>
+                        <tr>
+                            <td>상태 인식</td>
+                            <td>제한적</td>
+                            <td>관찰 기반</td>
+                            <td>관찰 기반</td>
+                            <td>관찰 히스토리</td>
+                            <td>관찰 기반</td>
+                            <td class="font-medium text-indigo-700">명시적 상태 임베딩</td>
+                        </tr>
+                        <tr>
+                            <td>협력 구조</td>
+                            <td>고정 계층</td>
+                            <td>고정 구조</td>
+                            <td>그룹 어텐션</td>
+                            <td>하이퍼그래프</td>
+                            <td>고정 구조, GNN</td>
+                            <td class="font-medium text-indigo-700">역할-상태 기반 동적 구조</td>
+                        </tr>
+                        <tr>
+                            <td>이기종 지원</td>
+                            <td>제한적</td>
+                            <td>제한적</td>
+                            <td>없음</td>
+                            <td>없음</td>
+                            <td>있음</td>
+                            <td class="font-medium text-indigo-700">타입별 처리 가능</td>
+                        </tr>
+                        <tr>
+                            <td>구조 학습</td>
+                            <td>없음</td>
+                            <td>없음</td>
+                            <td>있음(어텐션)</td>
+                            <td>있음(클러스터링)</td>
+                            <td>없음</td>
+                            <td class="font-medium text-indigo-700">있음(임베딩 기반)</td>
+                        </tr>
+                        <tr>
+                            <td>확장성</td>
+                            <td>높음</td>
+                            <td>중간</td>
+                            <td>중간</td>
+                            <td>높음</td>
+                            <td>중간</td>
+                            <td class="font-medium text-indigo-700">잠재적 높음</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-600">핵심 차별점</h3>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="highlight">
+                        <h4 class="font-semibold">1. 역할과 상태의 통합적 접근</h4>
+                        <p>기존 연구들이 역할 또는 상태 중 하나에만 초점을 맞추는 반면, 제안 연구는 역할과 상태 정보를 동시에 고려하여 보다 포괄적인 에이전트 특성 표현이 가능합니다. ROMA는 암묵적 역할 분화에 집중하고, GACG와 HYGMA는 현재 관찰만을 활용하는 반면, 제안 연구는 명시적 역할-상태 임베딩을 사용합니다.</p>
+                    </div>
+
+                    <div class="highlight">
+                        <h4 class="font-semibold">2. 동적 구조 학습의 정교화</h4>
+                        <p>GACG와 HYGMA가 동적 구조를 학습하지만 역할 정보를 반영하지 않는 반면, 제안 연구는 역할과 상태 정보에 기반한 더 정교한 동적 협력 구조를 학습합니다. 이는 환경 변화에 더 유연하게 대응하고 협력 효율을 높일 수 있는 잠재력을 가집니다.</p>
+                    </div>
+
+                    <div class="highlight">
+                        <h4 class="font-semibold">3. 이기종 에이전트 지원 강화</h4>
+                        <p>QMIX-GNN이 이기종 에이전트 처리를 지원하지만 고정된 협력 구조를 사용하는 반면, 제안 연구는 이기종성을 지원하면서 동시에 동적 협력 구조를 학습합니다. 이는 다양한 유형의 에이전트가 유연하게 협력할 수 있는 기반을 제공합니다.</p>
+                    </div>
+
+                    <div class="highlight">
+                        <h4 class="font-semibold">4. 정책-구조 공동 최적화</h4>
+                        <p>기존 연구들이 정책 학습에만 초점을 맞추거나 구조와 정책을 분리해서 학습하는 반면, 제안 연구는 구조와 정책의 공동 최적화를 통해 시너지 효과를 극대화합니다. 이는 손실 함수에 구조 학습 항이 포함된 것에서 확인할 수 있습니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">4. 독창성 및 학회 제출 가능성 평가</h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-indigo-600">독창성 평가</h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-green-700 mb-2">방법론적 독창성</h4>
+                        <div class="ml-4 pl-4 border-l-4 border-green-500">
+                            <p>명시적 역할-상태 임베딩과 이를 기반으로 한 협력 구조 학습의 결합은 기존 MARL 연구에서 충분히 탐색되지 않은 독창적인 접근법입니다. 특히 역할과 상태를 통합적으로 활용하는 점은 차별화된 특징입니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <h4 class="font-semibold text-green-700 mb-2">이론적 독창성</h4>
+                        <div class="ml-4 pl-4 border-l-4 border-green-500">
+                            <p>이기종 에이전트 환경에서 역할-상태 기반 협력 구조의 동적 형성에 관한 이론적 프레임워크를 제공합니다. 이는 역할 이론과 그래프 기반 협력 구조를 결합하는 새로운 시도입니다.</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="font-semibold text-green-700 mb-2">응용적 독창성</h4>
+                        <div class="ml-4 pl-4 border-l-4 border-green-500">
+                            <p>현실적인 물리 기반 AI 시스템(로봇, 분산 센서, 자율 주행 등)에 적용 가능한 일반화된 프레임워크를 제시하며, 실용적 가치가 높습니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-xl font-bold mb-4 text-indigo-600">학회 제출 가능성 평가</h3>
+                    
+                    <div class="flex mb-4">
+                        <div class="w-32 flex-shrink-0 flex items-center">
+                            <span class="font-semibold">이론적 기여:</span>
+                        </div>
+                        <div class="flex-grow bg-gray-200 rounded-full h-4">
+                            <div class="bg-green-600 h-4 rounded-full" style="width: 80%"></div>
+                        </div>
+                        <div class="w-8 flex-shrink-0 text-right">80%</div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="w-32 flex-shrink-0 flex items-center">
+                            <span class="font-semibold">방법론 완성도:</span>
+                        </div>
+                        <div class="flex-grow bg-gray-200 rounded-full h-4">
+                            <div class="bg-yellow-500 h-4 rounded-full" style="width: 65%"></div>
+                        </div>
+                        <div class="w-8 flex-shrink-0 text-right">65%</div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="w-32 flex-shrink-0 flex items-center">
+                            <span class="font-semibold">실험 계획:</span>
+                        </div>
+                        <div class="flex-grow bg-gray-200 rounded-full h-4">
+                            <div class="bg-yellow-500 h-4 rounded-full" style="width: 70%"></div>
+                        </div>
+                        <div class="w-8 flex-shrink-0 text-right">70%</div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="w-32 flex-shrink-0 flex items-center">
+                            <span class="font-semibold">독창성:</span>
+                        </div>
+                        <div class="flex-grow bg-gray-200 rounded-full h-4">
+                            <div class="bg-green-600 h-4 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <div class="w-8 flex-shrink-0 text-right">85%</div>
+                    </div>
+
+                    <div class="flex mb-8">
+                        <div class="w-32 flex-shrink-0 flex items-center">
+                            <span class="font-semibold">종합 평가:</span>
+                        </div>
+                        <div class="flex-grow bg-gray-200 rounded-full h-4">
+                            <div class="bg-green-600 h-4 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <div class="w-8 flex-shrink-0 text-right">75%</div>
+                    </div>
+
+                    <p class="font-semibold text-indigo-700">결론: 추가적인 보완 작업을 통해 NeurIPS, ICML, AAMAS와 같은 주요 AI/ML 학회에 제출 가능한 수준의 연구가 될 잠재력이 있습니다.</p>
+                </div>
+            </div>
+        </section>
+          
+        
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-6 text-indigo-700">5. 개선 및 보완 제안</h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="recommendation">
+                    <h3 class="font-semibold text-lg mb-2">방법론 구체화</h3>
+                    <ul class="list-disc ml-5">
+                        <li><strong>역할-상태 임베딩 아키텍처 상세화:</strong> 어떤 신경망 구조(MLP, GNN, Transformer 등)로 구현할지 명시</li>
+                        <li><strong>역할과 상태 정보의 표현 형식:</strong> 각 요소를 어떻게 수치화하고 임베딩에 반영할지 구체화</li>
+                        <li><strong>역할-상태와 구조 학습 사이의 메커니즘:</strong> 수학적으로 더 정교하게 정의</li>
+                        <li><strong>임베딩 기반의 구조 학습의 이론적 배경:</strong> 왜 이러한 구조가 효과적인지에 대한 이론적 근거 강화</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation">
+                    <h3 class="font-semibold text-lg mb-2">실험 설계 보완</h3>
+                    <ul class="list-disc ml-5">
+                        <li><strong>성능 메트릭 명확화:</strong> 어떤 지표로 기존 연구와 비교할지 구체화</li>
+                        <li><strong>베이스라인 선정 확장:</strong> 최신 연구를 포함한 다양한 비교군 설정</li>
+                        <li><strong>아블레이션 연구 계획:</strong> 각 구성 요소가 성능에 미치는 영향 분석 방법 제시</li>
+                        <li><strong>시각화 방법:</strong> 역할-상태 임베딩과 협력 구조가 어떻게 형성되는지 시각화 방법 계획</li>
+                        <li><strong>계산 효율성 분석:</strong> 추가 계산 오버헤드와 성능 향상의 균형점 분석</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation">
+                    <h3 class="font-semibold text-lg mb-2">이론적 배경 강화</h3>
+                    <ul class="list-disc ml-5">
+                        <li><strong>그래프 이론과 역할 이론의 통합:</strong> 두 이론적 틀을 결합하는 수학적 프레임워크 개발</li>
+                        <li><strong>이기종 에이전트에서의 최적 협력 구조에 대한 이론:</strong> 다양한 조건에서 최적 구조의 특성 분석</li>
+                        <li><strong>역할-상태 임베딩의 정보 이론적 분석:</strong> 정보 병목현상(Information Bottleneck) 등의 관점에서 분석</li>
+                        <li><strong>구조 학습의 수렴 분석:</strong> 제안된 방법의 수렴성에 대한 이론적 보장 제공</li>
+                    </ul>
+                </div>
+
+                <div class="recommendation">
+                    <h3 class="font-semibold text-lg mb-2">차별화 전략</h3>
+                    <ul class="list-disc ml-5">
+                        <li><strong>기존 연구 결과 직접 비교:</strong> 특히 ROMA, GACG, HYGMA 등과의 명확한 비교점 강조</li>
+                        <li><strong>실제 시나리오 적용:</strong> 현실 세계 문제에 적용 가능성 강조 및 사례 연구</li>
+                        <li><strong>역할-상태 기반 접근의 장점:</strong> 왜 이러한 접근법이 현실 세계의 복잡한 문제에 더 적합한지 설명</li>
+                        <li><strong>학제 간 연결:</strong> 조직 이론, 복잡계 과학 등 다른 분야와의 연결성 강조</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-6 mt-6">
+                <h3 class="text-xl font-bold mb-4 text-indigo-600">최종 평가 및 제언</h3>
+                <p class="mb-4">제안된 "역할-상태 인식 기반의 이기종 에이전트 협력 구조 학습" 연구는 명확한 독창성과 차별성을 갖추고 있으며, 기존 연구의 한계를 효과적으로 보완할 수 있는 잠재력을 가지고 있습니다. 특히 역할과 상태 정보를 명시적으로 활용하여 동적 협력 구조를 학습한다는 접근법은 기존 연구들과 차별화되는 점입니다.</p>
+                
+                <p class="mb-4">다만, 방법론의 세부적인 구현 방식과 이론적 근거를 더욱 강화하고, 실험 설계를 구체화하며, 계산 효율성 분석을 추가한다면 주요 학회에 제출 가능한 수준으로 발전시킬 수 있을 것으로 판단됩니다.</p>
+                
+                <div class="border-t border-gray-200 pt-4 mt-4">
+                    <p class="font-bold text-lg text-indigo-700">주요 액션 아이템:</p>
+                    <ol class="list-decimal ml-5 mt-2">
+                        <li>역할-상태 임베딩과 구조 학습의 아키텍처 상세 설계</li>
+                        <li>포괄적인 실험 프로토콜 수립 (베이스라인, 메트릭, 환경 설정)</li>
+                        <li>이론적 프레임워크 강화 및 수학적 근거 제시</li>
+                        <li>계산 효율성 분석 및 기존 방법과의 오버헤드 비교</li>
+                        <li>시각화 도구 및 분석 방법론 개발</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-indigo-800 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>© 2025 다중 에이전트 강화학습 연구 분석 리포트</p>
+            <p class="text-sm mt-2">이 분석 보고서는 5개의 논문과 연구 제안서를 기반으로 작성되었습니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart.js를 활용하여 연구 비교 방사형 차트 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.createElement('canvas');
+            canvas.id = 'comparisonRadarChart';
+            canvas.height = 250;
+        
+            const container = document.getElementById('radar-chart-section');
+            if (container) {
+                container.appendChild(canvas); // 안전하게 삽입
+            }
+        
+            const ctx = canvas.getContext('2d');
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['역할 인식', '상태 인식', '구조 학습', '이기종 지원', '확장성', '적응성'],
+                    datasets: [
+                        {
+                            label: 'FMH',
+                            data: [70, 40, 20, 35, 75, 40],
+                            backgroundColor: 'rgba(79, 70, 229, 0.2)',
+                            borderColor: 'rgba(79, 70, 229, 1)',
+                        },
+                        {
+                            label: 'ROMA',
+                            data: [80, 45, 25, 30, 60, 65],
+                            backgroundColor: 'rgba(124, 58, 237, 0.2)',
+                            borderColor: 'rgba(124, 58, 237, 1)',
+                        },
+                        {
+                            label: 'GACG',
+                            data: [30, 55, 70, 35, 60, 65],
+                            backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                            borderColor: 'rgba(59, 130, 246, 1)',
+                        },
+                        {
+                            label: 'HYGMA',
+                            data: [35, 60, 85, 40, 75, 80],
+                            backgroundColor: 'rgba(16, 185, 129, 0.2)',
+                            borderColor: 'rgba(16, 185, 129, 1)',
+                        },
+                        {
+                            label: 'QMIX-GNN',
+                            data: [45, 50, 30, 85, 65, 55],
+                            backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                            borderColor: 'rgba(239, 68, 68, 1)',
+                        },
+                        {
+                            label: '제안 연구',
+                            data: [85, 85, 75, 80, 70, 90],
+                            backgroundColor: 'rgba(245, 158, 11, 0.2)',
+                            borderColor: 'rgba(245, 158, 11, 1)',
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
